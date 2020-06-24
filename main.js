@@ -139,7 +139,6 @@ function demo() {
 
 let lastGain = 0;
 
-document.addEventListener('mouseup', () => currentNote = false);
 
 function getButton(e) {
     let coordinates = [
@@ -151,57 +150,72 @@ function getButton(e) {
 
 let currentButton;
 
+async function setupSoundEvents(instrument, note, buffer) {
+    buffers.piano[note] = buffer;
+
+    const button = document.getElementsByClassName(note)[0];
+    button.note = note;
+
+    function down() {
+        let [sound, gain] = playNote(instrument, note);
+        lastGain = gain;
+        currentNote = note;
+        currentButton = button
+    }
+
+    function up() {
+        fadeOut(instrument, lastGain);
+        currentNote = null;
+    }
+    
+    button.addEventListener('mouseover', () => { if(currentNote){ down() } });
+    button.addEventListener('touchmove', e => {
+        if(currentNote){ 
+            currentButton = getButton(e);
+
+            if(currentNote !== currentButton.note) {
+                currentButton.dispatchEvent(new Event('mouseover'));
+            }
+        }
+    });
+
+    button.addEventListener('mousedown', down);
+    button.addEventListener('touchstart', e => { down(); e.preventDefault(); })
+
+    button.addEventListener('mouseup', up);
+    button.addEventListener('touchend', () => {
+        if(currentButton) {
+            currentButton.dispatchEvent(new Event('mouseup'));
+        }
+    });
+}
+
+async function setupSound(instrument, note) {
+    buffer = await setupBuffer(instrument, note);
+    return await setupSoundEvents(instrument, note, buffer);
+}
+
 window.addEventListener('load', () => {
-    Object.keys(buffers).forEach(instrument =>
-        notes.forEach(note => setupBuffer(instrument, note)
-            .then(buffer => {
-                buffers.piano[note] = buffer;
-
-                const button = document.getElementsByClassName(note)[0];
-                button.note = note;
-
-                function down() {
-                    let [sound, gain] = playNote(instrument, note);
-                    lastGain = gain;
-                    currentNote = note;
-                    currentButton = button
-                }
-
-                function up() {
-                    fadeOut(instrument, lastGain);
-                    currentNote = null;
-                }
-                
-                button.addEventListener('mouseover', () => { if(currentNote){ down() } });
-                button.addEventListener('touchmove', e => {
-                    if(currentNote){ 
-                        currentButton = getButton(e);
-
-                        if(currentNote !== currentButton.note) {
-                            currentButton.dispatchEvent(new Event('mouseover'));
-                        }
-                    }
-                });
-
-                button.addEventListener('mousedown', down);
-                button.addEventListener('touchstart', e => { down(); e.preventDefault(); })
-
-                button.addEventListener('mouseup', up);
-                button.addEventListener('touchend', () => {
-                    if(currentButton) {
-                        currentButton.dispatchEvent(new Event('mouseup'));
-                    }
-                });
-            })
-        )
-    );
+    const setupProcedures = 
+        Object.keys(buffers).map(instrument =>
+            notes.map(note => new Promise((resolve, reject) =>
+                setupSound(instrument, note).then(resolve)
+            ))
+        );
+    
+    Promise.all(setupProcedures).then(() => {
+        console.log(document.getElementsByClassName('loading')[0].classList);
+        document.getElementsByClassName('loading')[0].classList.add(['loaded']);
+    });
+    
+    document.addEventListener('mouseup', () => currentNote = false);
 
     document.getElementsByClassName('demo')[0].addEventListener('mousedown', demo)
 
     const volumeSlider = document.getElementsByClassName('volume-slider')[0]
     volume.gain = volumeSlider.value / 255.0;
 
-    volumeSlider.addEventListener('mouseup', ()=> {
+    volumeSlider.addEventListener('mouseup', () => {
         console.log(volumeSlider.value / 255);
         volume.gain.value = volumeSlider.value / 255.0;
         console.log(volume);

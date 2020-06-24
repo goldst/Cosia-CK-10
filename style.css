@@ -543,3 +543,19 @@ main {
 ._G2 { grid-area: _G2; }
 ._A2 { grid-area: _A2; }
 ._B2 { grid-area: _B2; }
+
+.loading { 
+	position: absolute;
+	width: 20vw;
+	left: 40vw;
+	bottom: calc(50vh - 8vw);
+	text-align: center;
+	background-color: var(--beige);
+	border-radius: 1vw;
+	font-family: var(--poppins);
+	font-size: 1.5vw;
+}
+
+.loading.loaded {
+	visibility: hidden;
+}
