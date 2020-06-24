@@ -141,6 +141,16 @@ let lastGain = 0;
 
 document.addEventListener('mouseup', () => currentNote = false);
 
+function getButton(e) {
+    let coordinates = [
+        e.touches[0].pageX,
+        e.touches[0].pageY
+    ];
+    return document.elementFromPoint(...coordinates);
+}
+
+let currentButton;
+
 window.addEventListener('load', () => {
     Object.keys(buffers).forEach(instrument =>
         notes.forEach(note => setupBuffer(instrument, note)
@@ -154,19 +164,21 @@ window.addEventListener('load', () => {
                     let [sound, gain] = playNote(instrument, note);
                     lastGain = gain;
                     currentNote = note;
+                    currentButton = button
+                }
+
+                function up() {
+                    fadeOut(instrument, lastGain);
+                    currentNote = null;
                 }
                 
                 button.addEventListener('mouseover', () => { if(currentNote){ down() } });
                 button.addEventListener('touchmove', e => {
                     if(currentNote){ 
-                        let coordinates = [
-                            e.touches[0].pageX,
-                            e.touches[0].pageY
-                        ];
-                        const correctButton = document.elementFromPoint(...coordinates);
+                        currentButton = getButton(e);
 
-                        if(currentNote !== correctButton.note) {
-                            correctButton.dispatchEvent(new Event('mouseover'));
+                        if(currentNote !== currentButton.note) {
+                            currentButton.dispatchEvent(new Event('mouseover'));
                         }
                     }
                 });
@@ -174,8 +186,11 @@ window.addEventListener('load', () => {
                 button.addEventListener('mousedown', down);
                 button.addEventListener('touchstart', e => { down(); e.preventDefault(); })
 
-                button.addEventListener('mouseup', () => {
-                    fadeOut(instrument, lastGain);
+                button.addEventListener('mouseup', up);
+                button.addEventListener('touchend', () => {
+                    if(currentButton) {
+                        currentButton.dispatchEvent(new Event('mouseup'));
+                    }
                 });
             })
         )
