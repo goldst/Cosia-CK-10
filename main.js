@@ -8,13 +8,36 @@ const notes = [
     'C2', 'Cs2', 'D2', 'Ds2', 'E2', 'F2', 'Fs2', 'G2', 'Gs2', 'A2', 'As2', 'B2'
 ];
 const buffers = {
-    piano: {}//,
-    //fantasy: {},
+    piano: {},
+    fantasy: {}//,
     //violin: {},
     //flute: {}
 };
-const playingSources = [];
+const properties = {
+    piano: {
+        loopSample: false,
+        fadeIn: 0,
+        fadeOut: 0.25
+    },
+    fantasy: {
+        loopSample: true,
+        fadeIn: 0.15,
+        fadeOut: 1
+    },
+    violin: {
+        loopSample: true,
+        fadeIn: 0.15,
+        fadeOut: 0.25
+    },
+    flute: {
+        loopSample: true,
+        fadeIn: 0.15,
+        fadeOut: 0.25
+    }
+}
 
+const playingSources = [];
+let currentInstrument = 'piano';
 let currentNote = null;
 
 function getSoundFile(name) {
@@ -36,14 +59,22 @@ function getSoundFile(name) {
 
 async function setupBuffer(instrument, note) {
     const sample = await getSoundFile(`${instrument} ${note}`);
+    console.log(instrument, note);
     return await context.decodeAudioData(sample);
 }
 
 function playNoteAsync(instrument, note, time=0) {
     const source = context.createBufferSource();
+    console.log(instrument, note);
     source.buffer = buffers[instrument][note];
+    source.loop = properties[instrument].loopSample;
 
     const gain = context.createGain();
+
+    const t = context.currentTime;
+    gain.gain.linearRampToValueAtTime(0, t);
+    gain.gain.linearRampToValueAtTime(1, t + properties[instrument].fadeIn);
+
     source.connect(gain);
     gain.connect(volume)
 
@@ -66,7 +97,10 @@ function playNote(instrument, note, time=0) {
 }
 
 function fadeOut(instrument, gain) {
-    gain.gain.linearRampToValueAtTime(0, context.currentTime + 0.25);
+    const t = context.currentTime;
+
+    gain.gain.linearRampToValueAtTime(gain.gain.value, t);
+    gain.gain.linearRampToValueAtTime(0, t + properties[instrument].fadeOut);
 }
 
 function playScore(notes, speed, offset) {
@@ -134,7 +168,7 @@ function demo() {
         ['piano', 'G1', 12.5],
         ['piano', 'G1', 12.75],
         ['piano', 'F1', 13]
-    ], 1.6, 3);
+    ], 1.6, 0.25);
 }
 
 let lastGain = 0;
@@ -151,20 +185,21 @@ function getButton(e) {
 let currentButton;
 
 async function setupSoundEvents(instrument, note, buffer) {
-    buffers.piano[note] = buffer;
+    buffers[instrument][note] = buffer;
 
     const button = document.getElementsByClassName(note)[0];
     button.note = note;
 
     function down() {
-        let [sound, gain] = playNote(instrument, note);
+        console.log('down');
+        let [sound, gain] = playNote(currentInstrument, note);
         lastGain = gain;
         currentNote = note;
         currentButton = button
     }
 
     function up() {
-        fadeOut(instrument, lastGain);
+        fadeOut(currentInstrument, lastGain);
         currentNote = null;
     }
     
@@ -195,6 +230,23 @@ async function setupSound(instrument, note) {
     return await setupSoundEvents(instrument, note, buffer);
 }
 
+function setInstrument(n) {
+    switch (n) {
+        case 0:
+            currentInstrument = 'piano';
+            break;
+        case 1:
+            currentInstrument = 'fantasy';
+            break;
+        case 2:
+            currentInstrument = 'violin';
+            break;
+        default:
+            currentInstrument = 'flute';
+            break;
+    }
+}
+
 window.addEventListener('load', () => {
     const setupProcedures = 
         Object.keys(buffers).map(instrument =>
@@ -204,7 +256,6 @@ window.addEventListener('load', () => {
         );
     
     Promise.all(setupProcedures).then(() => {
-        console.log(document.getElementsByClassName('loading')[0].classList);
         document.getElementsByClassName('loading')[0].classList.add(['loaded']);
     });
     
@@ -212,13 +263,19 @@ window.addEventListener('load', () => {
 
     document.getElementsByClassName('demo')[0].addEventListener('mousedown', demo)
 
-    const volumeSlider = document.getElementsByClassName('volume-slider')[0]
+    const volumeSlider = document.getElementsByClassName('volume-slider')[0];
     volume.gain = volumeSlider.value / 255.0;
 
-    volumeSlider.addEventListener('mouseup', () => {
+    volumeSlider.addEventListener('change', () => {
         console.log(volumeSlider.value / 255);
         volume.gain.value = volumeSlider.value / 255.0;
-        console.log(volume);
     });
+
+    const toneSlider = document.getElementsByClassName('tone-slider')[0];
+    setInstrument(parseInt(toneSlider.value));
+
+    toneSlider.addEventListener('change', () => 
+        setInstrument(parseInt(toneSlider.value))
+    );
 });
 
