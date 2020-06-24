@@ -143,42 +143,41 @@ document.addEventListener('mouseup', () => currentNote = false);
 
 window.addEventListener('load', () => {
     Object.keys(buffers).forEach(instrument =>
-        notes.forEach(note =>
-            setupBuffer(instrument, note)
-                .then(buffer => {
-                    buffers.piano[note] = buffer;
+        notes.forEach(note => setupBuffer(instrument, note)
+            .then(buffer => {
+                buffers.piano[note] = buffer;
 
-                    const button = document.getElementsByClassName(note)[0];
-                    button.note = note;
+                const button = document.getElementsByClassName(note)[0];
+                button.note = note;
 
-                    function down() {
-                        let [sound, gain] = playNote(instrument, note);
-                        lastGain = gain;
-                        currentNote = note;
-                    }
-                    
-                    button.addEventListener('mouseover', () => { if(currentNote){ down() } });
-                    button.addEventListener('touchmove', e => {
-                        if(currentNote){ 
-                            let coordinates = [
-                                e.touches[0].pageX,
-                                e.touches[0].pageY
-                            ];
-                            const correctButton = document.elementFromPoint(...coordinates);
+                function down() {
+                    let [sound, gain] = playNote(instrument, note);
+                    lastGain = gain;
+                    currentNote = note;
+                }
+                
+                button.addEventListener('mouseover', () => { if(currentNote){ down() } });
+                button.addEventListener('touchmove', e => {
+                    if(currentNote){ 
+                        let coordinates = [
+                            e.touches[0].pageX,
+                            e.touches[0].pageY
+                        ];
+                        const correctButton = document.elementFromPoint(...coordinates);
 
-                            if(currentNote !== correctButton.note) {
-                               correctButton.dispatchEvent(new Event('mouseover'));
-                            }
+                        if(currentNote !== correctButton.note) {
+                            correctButton.dispatchEvent(new Event('mouseover'));
                         }
-                    });
+                    }
+                });
 
-                    button.addEventListener('mousedown', down);
-                    button.addEventListener('touchstart', e => { down(); e.preventDefault(); })
+                button.addEventListener('mousedown', down);
+                button.addEventListener('touchstart', e => { down(); e.preventDefault(); })
 
-                    button.addEventListener('mouseup', () => {
-                        fadeOut(instrument, lastGain);
-                    });
-                })
+                button.addEventListener('mouseup', () => {
+                    fadeOut(instrument, lastGain);
+                });
+            })
         )
     );
 

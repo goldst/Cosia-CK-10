@@ -203,7 +203,19 @@ nav {
 	padding: 0 calc(0.15 * var(--r-cm));
 }
 
-.slider::-webkit-slider-thumb,
+.slider::-webkit-slider-thumb {
+	border-radius: 0;
+	-webkit-appearance: none;
+	appearance: none;
+	width: calc(0.6 * var(--r-cm));
+	height: calc(0.6 * var(--r-cm));
+	background-color: var(--brown);
+	background-image: linear-gradient(90deg, transparent 40%, var(--brown-light) 40%, var(--brown-light) 60%, transparent 60%);
+	border-width: 0.15vw 0.2vw;
+	border-style: solid;
+	border-color: var(--brown-light) var(--beige-dark);
+}
+
 .slider::-moz-range-thumb {
 	border-radius: 0;
 	-webkit-appearance: none;
@@ -364,7 +376,15 @@ nav {
 	background-color: var(--black);
 }
 
-.radio-area input[type="range"]::-webkit-slider-thumb,
+.radio-area input[type="range"]::-webkit-slider-thumb {
+	border-radius: 0;
+	-webkit-appearance: none;
+	appearance: none;
+	background-color: #7BBDB0;
+	height: var(--h);
+	width: var(--h);
+}
+
 .radio-area input[type="range"]::-moz-range-thumb {
 	border-radius: 0;
 	-webkit-appearance: none;
