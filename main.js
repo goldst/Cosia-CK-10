@@ -138,6 +138,9 @@ function demo() {
 }
 
 let lastGain = 0;
+
+document.addEventListener('mouseup', () => currentNote = false);
+
 window.addEventListener('load', () => {
     Object.keys(buffers).forEach(instrument =>
         notes.forEach(note =>
@@ -145,10 +148,7 @@ window.addEventListener('load', () => {
                 .then(buffer => {
                     buffers.piano[note] = buffer;
 
-                    document.addEventListener('mouseup', () => currentNote = false);
-
-                    button = document.getElementsByClassName(note)[0];
-
+                    const button = document.getElementsByClassName(note)[0];
                     button.note = note;
 
                     function down() {
