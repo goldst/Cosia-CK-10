@@ -15,6 +15,8 @@ const buffers = {
 };
 const playingSources = [];
 
+let currentNote = null;
+
 function getSoundFile(name) {
     return new Promise((resolve, reject) => {
         const request = new XMLHttpRequest();
@@ -143,16 +145,38 @@ window.addEventListener('load', () => {
                 .then(buffer => {
                     buffers.piano[note] = buffer;
 
+                    document.addEventListener('mouseup', () => currentNote = false);
+
                     button = document.getElementsByClassName(note)[0];
-                    
-                    button.addEventListener('mousedown', () => {
+
+                    button.note = note;
+
+                    function down() {
                         let [sound, gain] = playNote(instrument, note);
                         lastGain = gain;
+                        currentNote = note;
+                    }
+                    
+                    button.addEventListener('mouseover', () => { if(currentNote){ down() } });
+                    button.addEventListener('touchmove', e => {
+                        if(currentNote){ 
+                            let coordinates = [
+                                e.touches[0].pageX,
+                                e.touches[0].pageY
+                            ];
+                            const correctButton = document.elementFromPoint(...coordinates);
+
+                            if(currentNote !== correctButton.note) {
+                               correctButton.dispatchEvent(new Event('mouseover'));
+                            }
+                        }
                     });
+
+                    button.addEventListener('mousedown', down);
+                    button.addEventListener('touchstart', e => { down(); e.preventDefault(); })
 
                     button.addEventListener('mouseup', () => {
                         fadeOut(instrument, lastGain);
-                        console.log('darth fader');
                     });
                 })
         )
