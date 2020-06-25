@@ -9,8 +9,8 @@ const notes = [
 ];
 const buffers = {
     piano: {},
-    fantasy: {}//,
-    //violin: {},
+    fantasy: {},
+    violin: {}//,
     //flute: {}
 };
 const properties = {
@@ -34,7 +34,7 @@ const properties = {
         fadeIn: 0.15,
         fadeOut: 0.25
     }
-}
+};
 
 const playingSources = [];
 let currentInstrument = 'piano';
