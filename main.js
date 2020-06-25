@@ -43,7 +43,7 @@ let currentNote = null;
 function getSoundFile(name) {
     return new Promise((resolve, reject) => {
         const request = new XMLHttpRequest();
-        request.open('GET', encodeURIComponent(`./sounds/${name}.wav`), true);
+        request.open('GET', `./sounds/${encodeURIComponent(name)}.wav`, true);
         request.responseType = 'arraybuffer';
         request.onload = () => {
             if (request.status >= 200 && request.status < 300) {
@@ -59,13 +59,16 @@ function getSoundFile(name) {
 
 async function setupBuffer(instrument, note) {
     const sample = await getSoundFile(`${instrument} ${note}`);
-    console.log(instrument, note);
-    return await context.decodeAudioData(sample);
+    try {
+        return await context.decodeAudioData(sample);
+    } catch (error) {
+        console.log('error decoding sample:', sample);
+        return;
+    }
 }
 
-function playNoteAsync(instrument, note, time=0) {
+function playNoteAsync(instrument, note, time=0, duration=undefined) {
     const source = context.createBufferSource();
-    console.log(instrument, note);
     source.buffer = buffers[instrument][note];
     source.loop = properties[instrument].loopSample;
 
@@ -78,96 +81,98 @@ function playNoteAsync(instrument, note, time=0) {
     source.connect(gain);
     gain.connect(volume)
 
+    if(duration) {
+        fadeOut(instrument, gain, t + duration);
+    }
+
     source.start(time);
 
     return [source, gain];
 }
 
-function playNote(instrument, note, time=0) {
+function playNote(instrument, note, time=0, duration=undefined) {
     while(playingSources.length > 0) {
         playingSources[0].stop();
         playingSources.shift();
     }
 
-    let [source, gain] = playNoteAsync(instrument, note, time);
+    let [source, gain] = playNoteAsync(instrument, note, time, duration);
 
     playingSources.push(source);
 
     return [source, gain];
 }
 
-function fadeOut(instrument, gain) {
-    const t = context.currentTime;
-
-    gain.gain.linearRampToValueAtTime(gain.gain.value, t);
-    gain.gain.linearRampToValueAtTime(0, t + properties[instrument].fadeOut);
+function fadeOut(instrument, gain, time=context.currentTime) {
+    gain.gain.linearRampToValueAtTime(gain.gain.value, time);
+    gain.gain.linearRampToValueAtTime(0, time + properties[instrument].fadeOut);
 }
 
 function playScore(notes, speed, offset) {
     const startTime = context.currentTime;
-    notes.forEach(note => playNoteAsync(note[0], note[1], startTime + speed * (offset + note[2])));
+    notes.forEach(note => playNoteAsync(note[0], note[1], startTime + speed * (offset + note[2]), note[4]));
 }
 
 function demo() {
     playScore([
-        ['piano', 'C1', -0.25],
-        ['piano', 'F1',  0.0],
-        ['piano', 'F1',  0.25],
-        ['piano', 'G1',  0.5],
-        ['piano', 'G1',  0.75],
-        ['piano', 'A1',  1],
-        ['piano', 'As1', 1.375],
-        ['piano', 'C2',  1.5],
-        ['piano', 'As1', 1.75],
-        ['piano', 'A1',  2],
-        ['piano', 'A1',  2.25],
-        ['piano', 'G1',  2.5],
-        ['piano', 'G1',  2.75],
-        ['piano', 'F1',  3],
+        ['piano', 'C1', -0.25,  0],
+        ['piano', 'F1',  0.0,   0],
+        ['piano', 'F1',  0.25,  0],
+        ['piano', 'G1',  0.5,   0],
+        ['piano', 'G1',  0.75,  0],
+        ['piano', 'A1',  1,     0],
+        ['piano', 'As1', 1.375, 0],
+        ['piano', 'C2',  1.5,   0],
+        ['piano', 'As1', 1.75,  0],
+        ['piano', 'A1',  2,     0],
+        ['piano', 'A1',  2.25,  0],
+        ['piano', 'G1',  2.5,   0],
+        ['piano', 'G1',  2.75,  0],
+        ['piano', 'F1',  3,     0],
 
-        ['piano', 'C1',  3.75],
-        ['piano', 'F1',  4.0],
-        ['piano', 'F1',  4.25],
-        ['piano', 'G1',  4.5],
-        ['piano', 'G1',  4.75],
-        ['piano', 'A1',  5],
-        ['piano', 'As1', 5.375],
-        ['piano', 'C2',  5.5],
-        ['piano', 'As1', 5.75],
-        ['piano', 'A1',  6],
-        ['piano', 'A1',  6.25],
-        ['piano', 'G1',  6.5],
-        ['piano', 'G1',  6.75],
-        ['piano', 'F1',  7],
+        ['piano', 'C1',  3.75,  0],
+        ['piano', 'F1',  4.0,   0],
+        ['piano', 'F1',  4.25,  0],
+        ['piano', 'G1',  4.5,   0],
+        ['piano', 'G1',  4.75,  0],
+        ['piano', 'A1',  5,     0],
+        ['piano', 'As1', 5.375, 0],
+        ['piano', 'C2',  5.5,   0],
+        ['piano', 'As1', 5.75,  0],
+        ['piano', 'A1',  6,     0],
+        ['piano', 'A1',  6.25,  0],
+        ['piano', 'G1',  6.5,   0],
+        ['piano', 'G1',  6.75,  0],
+        ['piano', 'F1',  7,     0],
 
-        ['piano', 'C2',  7.75],
-        ['piano', 'As1', 7.875],
-        ['piano', 'A1',  8],
-        ['piano', 'A1',  8.25],
-        ['piano', 'A1',  8.5],
-        ['piano', 'As1', 8.75],
-        ['piano', 'A1',  8.875],
-        ['piano', 'G1',  9],
-        ['piano', 'G1',  9.25],
-        ['piano', 'G1',  9.5],
+        ['piano', 'C2',  7.75,  0],
+        ['piano', 'As1', 7.875, 0],
+        ['piano', 'A1',  8,     0],
+        ['piano', 'A1',  8.25,  0],
+        ['piano', 'A1',  8.5,   0],
+        ['piano', 'As1', 8.75,  0],
+        ['piano', 'A1',  8.875, 0],
+        ['piano', 'G1',  9,     0],
+        ['piano', 'G1',  9.25,  0],
+        ['piano', 'G1',  9.5,   0],
 
-        ['piano', 'C2',   9.75],
-        ['piano', 'As1',  9.875],
-        ['piano', 'A1',  10],
-        ['piano', 'A1',  10.25],
-        ['piano', 'A1',  10.5],
-        ['piano', 'As1', 10.75],
-        ['piano', 'A1',  10.875],
-        ['piano', 'G1',  11],
-        ['piano', 'G1',  11.25],
-        ['piano', 'G1',  11.5],
+        ['piano', 'C2',   9.75,  0],
+        ['piano', 'As1',  9.875, 0],
+        ['piano', 'A1',  10,     0],
+        ['piano', 'A1',  10.25,  0],
+        ['piano', 'A1',  10.5,   0],
+        ['piano', 'As1', 10.75,  0],
+        ['piano', 'A1',  10.875, 0],
+        ['piano', 'G1',  11,     0],
+        ['piano', 'G1',  11.25,  0],
+        ['piano', 'G1',  11.5,   0],
 
-        ['piano', 'C2', 11.75],
-        ['piano', 'A1', 12],
-        ['piano', 'F1', 12.25],
-        ['piano', 'G1', 12.5],
-        ['piano', 'G1', 12.75],
-        ['piano', 'F1', 13]
+        ['piano', 'C2', 11.75, 0.25],
+        ['piano', 'A1', 12,    0.25],
+        ['piano', 'F1', 12.25, 0.25],
+        ['piano', 'G1', 12.5,  0.25],
+        ['piano', 'G1', 12.75, 0.25],
+        ['piano', 'F1', 13,    0.25]
     ], 1.6, 0.25);
 }
 
@@ -191,7 +196,6 @@ async function setupSoundEvents(instrument, note, buffer) {
     button.note = note;
 
     function down() {
-        console.log('down');
         let [sound, gain] = playNote(currentInstrument, note);
         lastGain = gain;
         currentNote = note;
