@@ -10,8 +10,8 @@ const notes = [
 const buffers = {
     piano: {},
     fantasy: {},
-    violin: {}//,
-    //flute: {}
+    violin: {},
+    flute: {}
 };
 const properties = {
     piano: {
