@@ -8,21 +8,25 @@
 	<script src="main.js"></script>
 </head>
 <body>
-	<div class="titlebar">
-		<a class="logo" href="/">
-			<div class="logo-image"></div>
-		</a>
-		<div class="theme">
-			<span>🌙</span>
-			<input class="slider slider-theme" type="range" min="0" max="2" value="1">
-			<span>☀️</span>
+
+	
+	<div class="top">
+		<div class="titlebar">
+			<a class="logo" href="/">
+				<div class="logo-image"></div>
+			</a>
+			<div class="theme">
+				<span class="dark">🌙</span>
+				<input class="slider slider-theme" type="range" min="0" max="2" value="1">
+				<span class="light">☀️</span>
+			</div>
+			<div class="noise">
+				<input class="slider slider-noise" type="range" min="0" max="1" value="1">
+				<span class="noise-on">noise</span>
+			</div>
 		</div>
-		<div class="noise">
-			<input class="slider slider-noise" type="range" min="0" max="1" value="1">
-			<span>noise</span>
-		</div>
+		<div class="antenna">---</div>
 	</div>
-	<div id="antenna">---</div>
 	<header>
 		<h1>Cosia <span>CK-10</span></h1>
 		<div id="title-right">
