@@ -559,3 +559,41 @@ main {
 .loading.loaded {
 	visibility: hidden;
 }
+
+.titlebar { 
+	width: 100vw;
+	display: flex;
+	height: calc(0.9 * var(--r-cm));
+}
+
+.titlebar .slider {
+	height: calc(0.8 * var(--r-cm));
+}
+
+.slider-theme { 
+	width: calc(1.6 * var(--r-cm));
+}
+
+.slider-noise {
+	width: calc(1.2 * var(--r-cm));
+}
+
+.logo { 
+	background-color: beige;
+	width: calc(1.46 * var(--r-cm));
+	display: grid;
+	grid-template-areas: "logo";
+	grid-template-columns: calc(0.56 * var(--r-cm));
+	column-gap: calc(0.0224 * var(--r-cm));
+	padding: calc(0.0224 * var(--r-cm));
+}
+
+.logo-image {
+	width: 100%;
+	height: 100%;
+	background-color: var(--beige-dark);
+	grid-area: logo;
+	mask: linear-gradient(black, black), url("blocks/card/card--main__logo.svg") no-repeat 0 0 / 100% 100%;
+	-webkit-mask-composite: xor;
+	mask-composite: subtract;
+}
