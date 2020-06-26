@@ -43,14 +43,12 @@ let currentNote = null;
 function getSoundFile(name) {
     return new Promise((resolve, reject) => {
         const request = new XMLHttpRequest();
-        request.open('GET', `./sounds/${encodeURIComponent(name)}.wav`, true);
+        request.open('GET', `./sounds/${encodeURIComponent(name)}.flac`);
         request.responseType = 'arraybuffer';
-        request.onload = () => {
-            if (request.status >= 200 && request.status < 300) {
-                resolve(request.response);
-            } else {
-                console.log(request.statusText);
-                reject(request.statusText);
+        request.onreadystatechange = () => {
+            if (request.readyState === 4) {
+                console.log(request.response);
+                resolve(request.response)
             }
         };
         request.send();
