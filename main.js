@@ -47,7 +47,6 @@ function getSoundFile(name) {
         request.responseType = 'arraybuffer';
         request.onreadystatechange = () => {
             if (request.readyState === 4) {
-                console.log(request.response);
                 resolve(request.response)
             }
         };
@@ -108,62 +107,62 @@ function fadeOut(instrument, gain, time=context.currentTime) {
 
 function playScore(notes, speed, offset) {
     const startTime = context.currentTime;
-    notes.forEach(note => playNoteAsync(note[0], note[1], startTime + speed * (offset + note[2]), note[4]));
+    notes.forEach(note => playNoteAsync(note[0], note[1], startTime + speed * (offset + note[2]), note[3]));
 }
 
 function demo() {
     playScore([
-        ['piano', 'C1', -0.25,  0],
-        ['piano', 'F1',  0.0,   0],
-        ['piano', 'F1',  0.25,  0],
-        ['piano', 'G1',  0.5,   0],
-        ['piano', 'G1',  0.75,  0],
-        ['piano', 'A1',  1,     0],
-        ['piano', 'As1', 1.375, 0],
-        ['piano', 'C2',  1.5,   0],
-        ['piano', 'As1', 1.75,  0],
-        ['piano', 'A1',  2,     0],
-        ['piano', 'A1',  2.25,  0],
-        ['piano', 'G1',  2.5,   0],
-        ['piano', 'G1',  2.75,  0],
-        ['piano', 'F1',  3,     0],
+        ['piano', 'C1', -0.25,  0.1],
+        ['piano', 'F1',  0.0,   0.1],
+        ['piano', 'F1',  0.25,  0.1],
+        ['piano', 'G1',  0.5,   0.1],
+        ['piano', 'G1',  0.75,  0.1],
+        ['piano', 'A1',  1,     0.1],
+        ['piano', 'As1', 1.375, 0.1],
+        ['piano', 'C2',  1.5,   0.1],
+        ['piano', 'As1', 1.75,  0.1],
+        ['piano', 'A1',  2,     0.1],
+        ['piano', 'A1',  2.25,  0.1],
+        ['piano', 'G1',  2.5,   0.1],
+        ['piano', 'G1',  2.75,  0.1],
+        ['piano', 'F1',  3,     0.1],
 
-        ['piano', 'C1',  3.75,  0],
-        ['piano', 'F1',  4.0,   0],
-        ['piano', 'F1',  4.25,  0],
-        ['piano', 'G1',  4.5,   0],
-        ['piano', 'G1',  4.75,  0],
-        ['piano', 'A1',  5,     0],
-        ['piano', 'As1', 5.375, 0],
-        ['piano', 'C2',  5.5,   0],
-        ['piano', 'As1', 5.75,  0],
-        ['piano', 'A1',  6,     0],
-        ['piano', 'A1',  6.25,  0],
-        ['piano', 'G1',  6.5,   0],
-        ['piano', 'G1',  6.75,  0],
-        ['piano', 'F1',  7,     0],
+        ['piano', 'C1',  3.75,  0.1],
+        ['piano', 'F1',  4.0,   0.1],
+        ['piano', 'F1',  4.25,  0.1],
+        ['piano', 'G1',  4.5,   0.1],
+        ['piano', 'G1',  4.75,  0.1],
+        ['piano', 'A1',  5,     0.1],
+        ['piano', 'As1', 5.375, 0.1],
+        ['piano', 'C2',  5.5,   0.1],
+        ['piano', 'As1', 5.75,  0.1],
+        ['piano', 'A1',  6,     0.1],
+        ['piano', 'A1',  6.25,  0.1],
+        ['piano', 'G1',  6.5,   0.1],
+        ['piano', 'G1',  6.75,  0.1],
+        ['piano', 'F1',  7,     0.1],
 
-        ['piano', 'C2',  7.75,  0],
-        ['piano', 'As1', 7.875, 0],
-        ['piano', 'A1',  8,     0],
-        ['piano', 'A1',  8.25,  0],
-        ['piano', 'A1',  8.5,   0],
-        ['piano', 'As1', 8.75,  0],
-        ['piano', 'A1',  8.875, 0],
-        ['piano', 'G1',  9,     0],
-        ['piano', 'G1',  9.25,  0],
-        ['piano', 'G1',  9.5,   0],
+        ['piano', 'C2',  7.75,  0.1],
+        ['piano', 'As1', 7.875, 0.1],
+        ['piano', 'A1',  8,     0.1],
+        ['piano', 'A1',  8.25,  0.1],
+        ['piano', 'A1',  8.5,   0.1],
+        ['piano', 'As1', 8.75,  0.1],
+        ['piano', 'A1',  8.875, 0.1],
+        ['piano', 'G1',  9,     0.1],
+        ['piano', 'G1',  9.25,  0.1],
+        ['piano', 'G1',  9.5,   0.1],
 
-        ['piano', 'C2',   9.75,  0],
-        ['piano', 'As1',  9.875, 0],
-        ['piano', 'A1',  10,     0],
-        ['piano', 'A1',  10.25,  0],
-        ['piano', 'A1',  10.5,   0],
-        ['piano', 'As1', 10.75,  0],
-        ['piano', 'A1',  10.875, 0],
-        ['piano', 'G1',  11,     0],
-        ['piano', 'G1',  11.25,  0],
-        ['piano', 'G1',  11.5,   0],
+        ['piano', 'C2',   9.75,  0.1],
+        ['piano', 'As1',  9.875, 0.1],
+        ['piano', 'A1',  10,     0.1],
+        ['piano', 'A1',  10.25,  0.1],
+        ['piano', 'A1',  10.5,   0.1],
+        ['piano', 'As1', 10.75,  0.1],
+        ['piano', 'A1',  10.875, 0.1],
+        ['piano', 'G1',  11,     0.1],
+        ['piano', 'G1',  11.25,  0.1],
+        ['piano', 'G1',  11.5,   0.1],
 
         ['piano', 'C2', 11.75, 0.25],
         ['piano', 'A1', 12,    0.25],
@@ -269,7 +268,6 @@ window.addEventListener('load', () => {
     volume.gain = volumeSlider.value / 255.0;
 
     volumeSlider.addEventListener('change', () => {
-        console.log(volumeSlider.value / 255);
         volume.gain.value = volumeSlider.value / 255.0;
     });
 

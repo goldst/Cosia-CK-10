@@ -514,6 +514,10 @@ main {
 .rhumba { grid-area: rhumba; }
 .beguine { grid-area: beguine; }
 
+.key {
+	padding: 0;
+}
+
 .key::-moz-focus-inner  {
 	border: 0;
 }
