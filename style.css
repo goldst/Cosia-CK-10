@@ -8,6 +8,18 @@
 	src: url(fonts/Michroma.ttf);
 }
 
+@font-face {
+	font-family: 'Manrope';
+	font-weight: 300;
+	src: url(fonts/Manrope-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'Manrope';
+	font-weight: 400;
+	src: url(fonts/Manrope-SemiBold.ttf);
+}
+
 :root {
 	--beige: #ffecb3;
 	--black: #0f0e0b;
@@ -31,6 +43,8 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	background-color: var(--beige-dark);
+	color: var(--brown);
+	font-family: 'Manrope', sans-serif;
 }
 
 header, nav, main, .button-row, .slider-row, .button {
@@ -51,10 +65,39 @@ header {
 	height: calc(0.9 * var(--r-cm));
 }
 
-h1, #title-right, .stereo {
+h1, .title-right, .stereo {
 	text-transform: uppercase;
 	margin-top: 0;
 	margin-bottom: 0;
+}
+
+.title-right {
+	font-family: 'Manrope', sans-serif;
+	font-weight: 400;
+	letter-spacing: calc(0.02 * var(--r-cm));
+	display: grid;
+	grid-template-areas:
+		"am-fm am-fm stereo-radio ."
+		". instrument instrument instrument";
+	grid-template-rows: calc(0.5 * var(--r-cm)) auto;
+	column-gap: calc(0.1 * var(--r-cm));
+	row-gap: calc(0.05 * var(--r-cm));
+	color: var(--brown);
+}
+
+.am-fm {
+	grid-area: am-fm;
+	font-size: calc(0.54 * var(--r-cm));
+}
+.stereo-radio { 
+	grid-area: stereo-radio;
+	font-size: calc(0.4 * var(--r-cm));
+	margin-top: calc(0.145 * var(--r-cm));
+}
+.instrument {
+	grid-area: instrument;
+	font-size: calc(0.29 * var(--r-cm));
+
 }
 
 h1 {
@@ -63,13 +106,14 @@ h1 {
 	flex-grow: 1;
 	font-family: 'Michroma';
 	font-weight: 800;
-	text-shadow: var(--px) var(--px) 0 var(--black), var(--px) var(--pxm) 0 var(--black), var(--pxm) var(--px) 0 var(--black), var(--pxm) var(--pxm) 0 var(--black), var(--px) 0px 0 var(--black), 0px var(--px) 0 var(--black), var(--pxm) 0px 0 var(--black), 0px var(--pxm) 0 var(--black);
+	text-shadow: var(--px) var(--px) 0 var(--brown), var(--px) var(--pxm) 0 var(--brown), var(--pxm) var(--px) 0 var(--brown), var(--pxm) var(--pxm) 0 var(--brown), var(--px) 0px 0 var(--brown), 0px var(--px) 0 var(--brown), var(--pxm) 0px 0 var(--brown), 0px var(--pxm) 0 var(--brown);
 	letter-spacing: calc(0.1 * var(--r-cm));
 	font-size: calc(0.9 * var(--r-cm));
+	color: var(--brown);
 }
 
 h1 span{
-	text-shadow: 1px 1px 0 var(--black), 1px -1px 0 var(--black), -1px 1px 0 var(--black), -1px -1px 0 var(--black), 1px 0px 0 var(--black), 0px 1px 0 var(--black), -1px 0px 0 var(--black), 0px -1px 0 var(--black);	
+	text-shadow: 1px 1px 0 var(--brown), 1px -1px 0 var(--brown), -1px 1px 0 var(--brown), -1px -1px 0 var(--brown), 1px 0px 0 var(--brown), 0px 1px 0 var(--brown), -1px 0px 0 var(--brown), 0px -1px 0 var(--brown);	
 	color: var(--beige);
 	font-family: var(--poppins);
 	letter-spacing: normal;
@@ -448,9 +492,10 @@ main {
 }
 
 .rythm {
-	font-size: 0.4vw;
+	font-size: 0.5vw;
 	text-align: center;
 	align-self: end;
+	color: var(--brown);
 }
 
 .march { grid-area: march; }
@@ -473,15 +518,40 @@ main {
 	grid-row-end: b-end;
 	z-index: 2;
 	background-color: black;
+	border-top-width: 0;
 	border-bottom-width: calc(0.25 * var(--r-cm));
+	border-bottom-left-radius: calc(0.05 * var(--r-cm));
+	border-bottom-right-radius: calc(0.05 * var(--r-cm));
+	border-bottom-color: var(--brown);
+	border-style: solid;
+	border-right-color: gray;
+	border-left-color: gray;
+	box-shadow: calc(-0.025 * var(--r-cm)) calc(0.2 * var(--r-cm)) calc(0.2 * var(--r-cm)) 0 rgba(0,0,0,0.5);
 }
 
 .key-b:active {
 	border-bottom-width: calc(0.1 * var(--r-cm));
+	box-shadow: calc(-0.01 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(0.1 * var(--r-cm)) 0 rgba(0,0,0,0.5);
 }
 
 .key-wl, .key-wm, .key-wr {
 	background-color: white;
+	border-top-width: 0;
+	border-bottom-left-radius: calc(0.1 * var(--r-cm));
+	border-bottom-right-radius: calc(0.1 * var(--r-cm));
+	border-color: var(--brown-light) var(--brown);
+	border-style: solid;
+	border-width: 0 calc(0.06 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(0.06 * var(--r-cm));
+	box-shadow:
+		0 calc(0.1 * var(--r-cm)) calc(0.1 * var(--r-cm)) 0 rgba(0,0,0,0.5),
+		inset 0 calc(0.15 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(-0.1 * var(--r-cm)) rgba(0,0,0,0.5);
+}
+
+.key-wl:active, .key-wm:active, .key-wr:active {
+	border-bottom-width: calc(0.08 * var(--r-cm));
+	box-shadow:
+		0px calc(0.05 * var(--r-cm)) calc(0.05 * var(--r-cm)) 0px rgba(0,0,0,0.5),
+		inset 0px calc(0.15 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(-0.1 * var(--r-cm)) rgba(0,0,0,0.5);
 }
 
 
