@@ -673,3 +673,26 @@ main {
 	-webkit-mask-composite: xor;
 	mask-composite: subtract;
 }
+
+footer {
+	margin-top: calc(0.1 * var(--r-cm));
+}
+
+footer, footer a { 
+	text-align: center;
+	color: var(--beige);
+	text-decoration: none;
+}
+
+footer ul {
+	margin: 0;
+	padding-left: 0;
+}
+
+footer ul li {
+	display: inline-block;
+}
+
+footer  ul :not(:last-child)::after {
+	content: " | ";
+}
