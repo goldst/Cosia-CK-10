@@ -274,6 +274,10 @@ nav {
 	border-color: var(--brown-light) var(--beige-dark);
 }
 
+.volume-slider { 
+	width: calc(4.6 * var(--r-cm));
+}
+
 .caption {
 	grid-area: caption; 
 	align-self: center;
@@ -625,6 +629,7 @@ main {
 	text-shadow: 1px 1px 0 var(--beige-dark), 1px -1px 0 var(--beige-dark), -1px 1px 0 var(--beige-dark), -1px -1px 0 var(--beige-dark), 1px 0px 0 var(--beige-dark), 0px 1px 0 var(--beige-dark), -1px 0px 0 var(--beige-dark), 0px -1px 0 var(--beige-dark);
 	align-self: center;
 	font-family: var(--poppins);
+	font-size: calc(0.35 * var(--r-cm));
 }
 
 ._G0 { grid-area: _G0; }
@@ -723,6 +728,7 @@ main {
 .titlebar span {
 	color: transparent;
 	text-shadow: 0 0 0 var(--brown);
+	font-size: calc(0.3 * var(--r-cm));
 	transition: text-shadow 0.5s;
 }
 
@@ -783,6 +789,7 @@ main {
 
 footer {
 	margin-top: calc(0.1 * var(--r-cm));
+	font-size: calc(0.4 * var(--r-cm));
 }
 
 footer, footer a { 
