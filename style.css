@@ -668,13 +668,13 @@ main {
 
 .top {
 	display: flex;
-	margin-bottom: calc(0.2 * var(--r-cm));
 }
 
 .titlebar { 
-	width: 80vw;
+	width: calc(24 * var(--r-cm));
 	display: flex;
 	height: calc(1.3 * var(--r-cm));
+	margin-bottom: calc(0.2 * var(--r-cm));
 }
 
 .titlebar .slider {
@@ -809,4 +809,13 @@ footer ul li {
 
 footer  ul :not(:last-child)::after {
 	content: " | ";
+}
+
+.antenna {
+	width: 100%;
+	background-image:
+		linear-gradient(180deg, var(--beige-dark) 1.6vw, transparent 1.6vw),
+		linear-gradient(90deg, transparent 31.5vw, var(--beige) 31.5vw, var(--beige) 34.8vw, transparent 34.8vw, transparent 55vw, grey 55vw, grey, rgb(182, 182, 182), grey, grey 57vw, var(--beige-dark) 57vw),
+		linear-gradient(180deg, transparent 1.6vw, white 1.6vw, grey, rgb(182, 182, 182), grey, grey 2.6vw, transparent 2.6vw),
+		linear-gradient(90deg, transparent 2.5vw, var(--beige) 2.5vw, var(--beige) 4vw, transparent 4vw);
 }
