@@ -467,6 +467,7 @@ nav {
 main {
 	padding-top: calc(0.4 * var(--r-cm));
 	align-items: stretch;
+	box-shadow: 0 calc(0.1 * var(--r-cm)) calc(0.2 * var(--r-cm)) var(--brown-light);
 }
 
 .speaker {
@@ -814,8 +815,8 @@ footer  ul :not(:last-child)::after {
 .antenna {
 	width: 100%;
 	background-image:
-		linear-gradient(180deg, var(--beige-dark) 1.6vw, transparent 1.6vw),
+		linear-gradient(180deg, var(--beige-dark) 1.6vw, transparent 1.6vw, var(--beige-dark) 5vw),
 		linear-gradient(90deg, transparent 31.5vw, var(--beige) 31.5vw, var(--beige) 34.8vw, transparent 34.8vw, transparent 55vw, grey 55vw, grey, rgb(182, 182, 182), grey, grey 57vw, var(--beige-dark) 57vw),
-		linear-gradient(180deg, transparent 1.6vw, white 1.6vw, grey, rgb(182, 182, 182), grey, grey 2.6vw, transparent 2.6vw),
+		linear-gradient(180deg, transparent 1.6vw, white 1.6vw, grey, rgb(182, 182, 182), grey, grey 2.6vw, transparent 2.6vw, var(--beige-dark) 7vw),
 		linear-gradient(90deg, transparent 2.5vw, var(--beige) 2.5vw, var(--beige) 4vw, transparent 4vw);
 }
