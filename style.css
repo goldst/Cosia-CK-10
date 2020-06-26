@@ -669,6 +669,7 @@ main {
 	height: 100%;
 	background-color: var(--beige-dark);
 	grid-area: logo;
+	--webkit-mask: linear-gradient(black, black), url("/blocks/card/card--main__logo.svg") no-repeat 0 0 / 100% 100%;
 	mask: linear-gradient(black, black), url("/blocks/card/card--main__logo.svg") no-repeat 0 0 / 100% 100%;
 	-webkit-mask-composite: xor;
 	mask-composite: subtract;
