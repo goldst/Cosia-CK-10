@@ -113,9 +113,12 @@ h1 {
 }
 
 h1 span{
-	text-shadow: 1px 1px 0 var(--brown), 1px -1px 0 var(--brown), -1px 1px 0 var(--brown), -1px -1px 0 var(--brown), 1px 0px 0 var(--brown), 0px 1px 0 var(--brown), -1px 0px 0 var(--brown), 0px -1px 0 var(--brown);	
+	--px: calc(0.025 * var(--r-cm));
+	--pxm: calc(-1 * var(--px));
+	text-shadow: var(--px) var(--px) 0 var(--brown), var(--px) var(--pxm) 0 var(--brown), var(--pxm) var(--px) 0 var(--brown), var(--pxm) var(--pxm) 0 var(--brown), var(--px) 0px 0 var(--brown), 0px var(--px) 0 var(--brown), var(--pxm) 0px 0 var(--brown), 0px var(--pxm) 0 var(--brown);	
 	color: var(--beige);
 	font-family: var(--poppins);
+	font-size: calc(0.7 * var(--r-cm));
 	letter-spacing: normal;
 }
 
@@ -156,8 +159,10 @@ nav {
 }
 
 .slider-row {
+	--px: calc(0.025 * var(--r-cm));
+	--pxm: calc(-1 * var(--px));
 	font-size: calc(0.25 * var(--r-cm));
-	text-shadow: 1px 1px 0 var(--brown), 1px -1px 0 var(--brown), -1px 1px 0 var(--brown), -1px -1px 0 var(--brown), 1px 0px 0 var(--brown), 0px 1px 0 var(--brown), -1px 0px 0 var(--brown), 0px -1px 0 var(--brown);
+	text-shadow: var(--px) var(--px) 0 var(--brown), var(--px) var(--pxm) 0 var(--brown), var(--pxm) var(--px) 0 var(--brown), var(--pxm) var(--pxm) 0 var(--brown), var(--px) 0px 0 var(--brown), 0px var(--px) 0 var(--brown), var(--pxm) 0px 0 var(--brown), 0px var(--pxm) 0 var(--brown);
 }
 
 .slider-row div div {
@@ -182,6 +187,13 @@ nav {
 	grid-area: power-off;
 	border: 0.1vw solid var(--beige);
 	text-align: center;
+}
+
+.power-led {
+	grid-area: led;
+	background: linear-gradient(90deg, rgb(255, 103, 103), rgb(212, 0, 81));
+	margin: calc(0.1 * var(--r-cm)) calc(0.5 * var(--r-cm)) calc(0.75 * var(--r-cm)) calc(0.5 * var(--r-cm));
+	box-shadow: 0 0 calc(0.1 * var(--r-cm)) calc(0.05 * var(--r-cm)) red;
 }
 
 .slider-row div .marker {
@@ -246,6 +258,7 @@ nav {
 	box-shadow: inset 0 0 0.45vw 0 var(--black), inset 0 0 0 0.45vw var(--beige), inset 0 0.75vw 0 0 var(--brown-light), inset 0 -0.75vw 0 0 var(--brown-light);
 	padding: 0 calc(0.15 * var(--r-cm));
 	transition: border-radius 0.5s, height 0.5s, margin-top 0.5s;
+	margin: calc(0.045 * var(--r-cm));
 }
 
 .slider::-webkit-slider-thumb {
@@ -432,6 +445,7 @@ nav {
 	background-color: #7BBDB0;
 	height: var(--h);
 	width: var(--h);
+	border: none;
 }
 
 .radio-area input[type="range"]::-moz-range-thumb {
@@ -441,6 +455,7 @@ nav {
 	background-color: #7BBDB0;
 	height: var(--h);
 	width: var(--h);
+	border: none;
 }
 
 .fmam {
@@ -527,8 +542,7 @@ main {
 	grid-row-end: b-end;
 	z-index: 2;
 	background-color: black;
-	border-top-width: 0;
-	border-bottom-width: calc(0.25 * var(--r-cm));
+	border-width: 0 calc(0.07 * var(--r-cm)) calc(0.25 * var(--r-cm));
 	border-bottom-left-radius: calc(0.05 * var(--r-cm));
 	border-bottom-right-radius: calc(0.05 * var(--r-cm));
 	border-bottom-color: var(--brown);
@@ -630,8 +644,11 @@ main {
 }
 
 ._ {
+	--px: calc(0.025 * var(--r-cm));
+	--pxm: calc(-1 * var(--px));
+	
 	color: var(--beige);
-	text-shadow: 1px 1px 0 var(--beige-dark), 1px -1px 0 var(--beige-dark), -1px 1px 0 var(--beige-dark), -1px -1px 0 var(--beige-dark), 1px 0px 0 var(--beige-dark), 0px 1px 0 var(--beige-dark), -1px 0px 0 var(--beige-dark), 0px -1px 0 var(--beige-dark);
+	text-shadow: var(--px) var(--px) 0 var(--beige-dark), var(--px) var(--pxm) 0 var(--beige-dark), var(--pxm) var(--px) 0 var(--beige-dark), var(--pxm) var(--pxm) 0 var(--beige-dark), var(--px) 0px 0 var(--beige-dark), 0px var(--pxm) 0 var(--beige-dark), var(--px) 0px 0 var(--beige-dark), 0px var(--px) 0 var(--beige-dark);
 	align-self: center;
 	font-family: var(--poppins);
 	font-size: calc(0.35 * var(--r-cm));
@@ -823,4 +840,25 @@ footer  ul :not(:last-child)::after {
 		linear-gradient(90deg, transparent 31.5vw, var(--beige) 31.5vw, var(--beige) 34.8vw, transparent 34.8vw, transparent 55vw, grey 55vw, grey, rgb(182, 182, 182), grey, grey 57vw, var(--beige-dark) 57vw),
 		linear-gradient(180deg, transparent 1.6vw, white 1.6vw, grey, rgb(182, 182, 182), grey, grey 2.6vw, transparent 2.6vw, var(--beige-dark) 7vw),
 		linear-gradient(90deg, transparent 2.5vw, var(--beige) 2.5vw, var(--beige) 4vw, transparent 4vw);
+}
+
+.antenna::before {
+	content: "";
+	background-color: black;
+	background-image: linear-gradient(180deg, var(--brown), grey, black, black, black);
+	display: block;
+	width: calc(0.8 * var(--r-cm));
+	height: calc(0.6 * var(--r-cm));
+	margin-top: calc(0.55 * var(--r-cm));
+}
+
+.antenna::after {
+	content: "";
+	display: block;
+	background-image: radial-gradient(ellipse at bottom, rgb(182, 182, 182), grey, grey 75%, var(--beige-dark) 75%);
+	width: calc(0.8 * var(--r-cm));
+	height: calc(0.3 * var(--r-cm));
+	position: relative;
+	left: calc(22.26 * var(--r-cm));
+	top: calc(-0.65 * var(--r-cm));
 }
