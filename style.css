@@ -527,6 +527,7 @@ main {
 	border-right-color: gray;
 	border-left-color: gray;
 	box-shadow: calc(-0.025 * var(--r-cm)) calc(0.2 * var(--r-cm)) calc(0.2 * var(--r-cm)) 0 rgba(0,0,0,0.5);
+	z-index: 3;
 }
 
 .key-b:active {
@@ -545,6 +546,22 @@ main {
 	box-shadow:
 		0 calc(0.1 * var(--r-cm)) calc(0.1 * var(--r-cm)) 0 rgba(0,0,0,0.5),
 		inset 0 calc(0.15 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(-0.1 * var(--r-cm)) rgba(0,0,0,0.5);
+	z-index: 2;
+}
+
+.key-fst {
+	border-left-width: 0;
+	box-shadow:
+		calc(0.1 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(0.1 * var(--r-cm)) 0 rgba(0,0,0,0.5),
+		inset calc(0.1 * var(--r-cm)) calc(0.15 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(-0.1 * var(--r-cm)) rgba(0,0,0,0.5);
+}
+
+.key-wr.key-lst {
+	border-right-width: 0;
+	box-shadow:
+		calc(-0.1 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(0.1 * var(--r-cm)) 0 rgba(0,0,0,0.5),
+		inset calc(-0.1 * var(--r-cm)) calc(0.15 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(-0.1 * var(--r-cm)) rgba(0,0,0,0.5);
+		z-index: 1;
 }
 
 .key-wl:active, .key-wm:active, .key-wr:active {
@@ -554,6 +571,19 @@ main {
 		inset 0px calc(0.15 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(-0.1 * var(--r-cm)) rgba(0,0,0,0.5);
 }
 
+.key-wl.key-fst:active {
+	border-left-width: 0;
+	box-shadow:
+		calc(0.05 * var(--r-cm)) calc(0.05 * var(--r-cm)) calc(0.05 * var(--r-cm)) 0 rgba(0,0,0,0.5),
+		inset calc(0.1 * var(--r-cm)) calc(0.15 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(-0.1 * var(--r-cm)) rgba(0,0,0,0.5);
+}
+
+.key-wr.key-lst:active {
+	border-left-width: 0;
+	box-shadow:
+		calc(-0.05 * var(--r-cm)) calc(0.05 * var(--r-cm)) calc(0.05 * var(--r-cm)) 0 rgba(0,0,0,0.5),
+		inset calc(-0.1 * var(--r-cm)) calc(0.15 * var(--r-cm)) calc(0.1 * var(--r-cm)) calc(-0.1 * var(--r-cm)) rgba(0,0,0,0.5);
+}
 
 .Gs0 { grid-column-start: Gs0-0; grid-column-end: Gs0-1; }
 .As0 { grid-column-start: As0-0; grid-column-end: As0-1; }
@@ -731,7 +761,13 @@ main {
 	grid-template-columns: calc(0.56 * var(--r-cm));
 	column-gap: calc(0.0224 * var(--r-cm));
 	padding: calc(0.0224 * var(--r-cm));
-	margin-top: calc(0.4 * var(--r-cm))
+	margin-top: calc(0.4 * var(--r-cm));
+	transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.logo:hover {
+	transform: scale(1.1);
+	box-shadow: 0 0 calc(0.2 * var(--r-cm)) 0 var(--beige);
 }
 
 .logo-image {
