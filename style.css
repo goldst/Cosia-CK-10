@@ -766,7 +766,7 @@ main {
 	transition: text-shadow 0.5s;
 }
 
-.theme, .noise {
+.slider-block-top {
 	display: grid;
 	grid-template-rows: calc(0.4 * var(--r-cm));
 	margin-left: calc(0.4 * var(--r-cm));
@@ -791,6 +791,27 @@ main {
 
 .slider-noise {
 	width: calc(1.2 * var(--r-cm));
+}
+
+.pitch {
+	grid-template-areas: "b pitch s" "slider slider slider";
+}
+
+.slider-pitch { 
+	grid-area: slider;
+	width: calc(1.6 * var(--r-cm));
+}
+
+.pitch-b {
+	grid-area: b;
+}
+
+.pitch-pitch {
+	grid-area: pitch;
+}
+
+.pitch-s {
+	grid-area: s;
 }
 
 .logo { 
